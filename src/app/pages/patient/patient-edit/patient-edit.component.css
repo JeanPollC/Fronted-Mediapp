@@ -1,0 +1,17 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-container {
+    width: red;
+}
+
+.invalid {
+    color: red;
+}
+
+.cancel-button{
+    background-color: red !important;
+    color: white;
+}
