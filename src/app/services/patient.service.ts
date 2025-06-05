@@ -1,20 +1,30 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Patient } from '../model/patient';
 import { Subject } from 'rxjs';
+import { GenericService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService {
+export class PatientService extends GenericService<Patient>{
 
-  private url: string = `${environment.HOST}/patients`;
-  private patientChange: Subject<Patient[]> = new Subject<Patient[]>
+  //private url: string = `${environment.HOST}/patients`;
+  private patientChange: Subject<Patient[]> = new Subject<Patient[]>;
+  private messageChange: Subject<string> = new Subject<string>;
 
-  constructor(private http: HttpClient) { }
+  constructor(){
+    super(
+      inject(HttpClient),
+      `${environment.HOST}/patients`
+    )
+  }
 
-  findAll(){
+
+  //constructor(private http: HttpClient) { }
+
+  /*findAll(){
     return this.http.get<Patient[]>(this.url);
   }
 
@@ -32,7 +42,7 @@ export class PatientService {
 
   delete(id: number){
     return this.http.delete(`${this.url}/${id}`);
-  }
+  }*/
 
   getPatientChange(){
     return this.patientChange.asObservable();
@@ -41,5 +51,14 @@ export class PatientService {
   setPatientChange(data: Patient[]){
     this.patientChange.next(data);
   }
+
+  getMessageChangue(){
+    return this.messageChange.asObservable();
+  }
+
+  setMessageChangue(data: string){
+    this.messageChange.next(data);
+  }
+
 
 }

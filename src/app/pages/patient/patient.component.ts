@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patient',
@@ -29,12 +30,16 @@ export class PatientComponent {
   @ViewChild(MatSort) matSort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator
 
-  constructor(private patientService: PatientService) { }
+  constructor(
+    private patientService: PatientService,
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.patientService.findAll().subscribe(data => this.createTable(data));
 
     this.patientService.getPatientChange().subscribe(data => this.createTable(data));
+    this.patientService.getMessageChangue().subscribe(message => this._snackBar.open(message, 'INFO', { duration: 2000}));
   }
 
   createTable(data: Patient[]){
@@ -53,8 +58,9 @@ export class PatientComponent {
 
   delete(id: number){
     this.patientService.delete(id).pipe(
-      switchMap( () => this.patientService.findAll()),
+      switchMap( () => this.patientService.findAll() ),
       tap( data => this.patientService.setPatientChange(data)),
+      tap( () => this.patientService.setMessageChangue('DELETED!'))
     ).subscribe();
   }
 

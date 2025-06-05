@@ -8,26 +8,50 @@
 
     <mat-form-field>
         <input matInput placeholder="FirstName" formControlName="firstName">
+        @if (f['firstName'].errors?.['required'] && f['firstName'].touched) {
+            <small class="invalid">Is required</small>
+        }
+        @if (f['firstName'].errors?.['minlength'] && f['firstName'].touched) {
+            <small class="invalid">MinLength is 3</small>
+        }
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="LastName" formControlName="lastName">
+        @if (f['lastName'].errors?.['required'] && f['lastName'].touched) {
+            <small class="invalid">Is required</small>
+        }
+        @if (f['lastName'].errors?.['minlength'] && f['lastName'].touched) {
+            <small class="invalid">MinLength is 3</small>
+        }
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="DNI" formControlName="dni">
+        @if (f['dni'].errors?.['requiered'] && f['dni'].touched) {
+            <small class="invalid">Is requiered</small>
+        }
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="Address" formControlName="address">
+        @if (f['address'].errors?.['requiered'] && f['address'].touched) {
+            <small class="invalid">Is requiered</small>
+        }
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="Phone" formControlName="phone">
+        @if (f['phone'].errors?.['pattern'] && f['phone'].touched) {
+            <small class="invalid">Is requiered</small>
+        }
     </mat-form-field>
 
     <mat-form-field>
         <input matInput placeholder="Email" formControlName="email">
+        @if (f['email'].errors?.['email'] && f['email'].touched) {
+            <small class="invalid">Bad Format</small>
+        }
     </mat-form-field>
 
     <button mat-flat-button type="submit">

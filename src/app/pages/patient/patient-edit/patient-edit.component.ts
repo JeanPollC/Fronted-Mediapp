@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material/material.module';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PatientService } from '../../../services/patient.service';
 import { Patient } from '../../../model/patient';
@@ -27,12 +27,12 @@ export class PatientEditComponent {
   ngOnInit(): void {
     this.form = new FormGroup({
       idPatient: new FormControl(),
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      dni: new FormControl(),
-      address: new FormControl(),
-      phone: new FormControl(),
-      email: new FormControl(),
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(70) ]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(70)]),
+      dni: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.pattern['[0-9]+']),
+      email: new FormControl('', Validators.email),
     });
 
     this.route.params.subscribe(data => {
@@ -47,12 +47,12 @@ export class PatientEditComponent {
       this.patientService.findById(this.id).subscribe(data => {
         this.form = new FormGroup({
           idPatient: new FormControl(data.idPatient),
-          firstName: new FormControl(data.firstName),
-          lastName: new FormControl(data.lastName),
-          dni: new FormControl(data.dni),
-          address: new FormControl(data.address),
-          phone: new FormControl(data.phone),
-          email: new FormControl(data.email)
+          firstName: new FormControl(data.firstName, [Validators.required, Validators.minLength(3), Validators.maxLength(70)]),
+          lastName: new FormControl(data.lastName, [Validators.required, Validators.minLength(3), Validators.maxLength(70)]),
+          dni: new FormControl(data.dni, Validators.required),
+          address: new FormControl(data.address, Validators.required),
+          phone: new FormControl(data.phone, Validators.pattern['[0-9]+']),
+          email: new FormControl(data.email, Validators.email)
         });
       });
     }
@@ -73,6 +73,7 @@ export class PatientEditComponent {
       this.patientService.update(this.id, patient).subscribe( () => {
         this.patientService.findAll().subscribe( data => {
           this.patientService.setPatientChange(data); 
+          this.patientService.setMessageChangue('UPDATED!');
         })
       })
     }else{
@@ -83,11 +84,16 @@ export class PatientEditComponent {
       .subscribe(data => this.patientService.setPatientChange(data));*/
       this.patientService.save(patient).pipe(
         switchMap( () => this.patientService.findAll()),
-        tap(data => this.patientService.setPatientChange(data))
+        tap(data => this.patientService.setPatientChange(data)),
+        tap(() => this.patientService.setMessageChangue('SAVED'))
       ).subscribe();
     }
 
     this.router.navigate(['/pages/patient'])
+  }
+
+  get f(){
+    return this.form.controls;  
   }
 
 }
