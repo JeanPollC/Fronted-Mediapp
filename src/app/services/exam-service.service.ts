@@ -7,12 +7,12 @@ import { Exam } from '../model/exam';
 @Injectable({
   providedIn: 'root'
 })
-export class ExamServiceService extends GenericService<Exam>{
+export class ExamService extends GenericService<Exam>{
 
   constructor() {
     super(
     inject(HttpClient),
-    `${environment.HOST}/exam`
+    `${environment.HOST}/exams`
    );
   }
 }
