@@ -27,6 +27,8 @@ export class PatientComponent {
     { def: 'actions', label: 'actions', hide: false }
   ]
 
+  totalElements: number = 0;
+
   @ViewChild(MatSort) matSort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator
 
@@ -36,7 +38,12 @@ export class PatientComponent {
   ) { }
 
   ngOnInit(): void {
-    this.patientService.findAll().subscribe(data => this.createTable(data));
+    this.patientService.listPageable(0,2).subscribe(data => {
+      this.createTable(data.content);
+      this.totalElements = data.totalElements
+    })
+    
+    //this.patientService.findAll().subscribe(data => this.createTable(data));
 
     this.patientService.getPatientChange().subscribe(data => this.createTable(data));
     this.patientService.getMessageChangue().subscribe(message => this._snackBar.open(message, 'INFO', { duration: 2000}));
@@ -45,7 +52,7 @@ export class PatientComponent {
   createTable(data: Patient[]){
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.matSort;
-    this.dataSource.paginator = this.paginator
+    //this.dataSource.paginator = this.paginator
   }
 
   applyFilter(e: any) {
@@ -62,6 +69,14 @@ export class PatientComponent {
       tap( data => this.patientService.setPatientChange(data)),
       tap( () => this.patientService.setMessageChangue('DELETED!'))
     ).subscribe();
+  }
+
+  showMore(e: any){
+    this.patientService.listPageable(e.pageIndex, e.pageSize).subscribe(data => {
+      this.createTable(data.content)
+      this.totalElements = data.totalElements;
+      
+    })
   }
 
 }

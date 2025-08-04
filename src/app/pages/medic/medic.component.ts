@@ -1,4 +1,4 @@
-import { Component, Inject, inject, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MedicService } from '../../services/medic.service';
 import { Medic } from '../../model/medic';
 import { MatTableDataSource } from '@angular/material/table';

@@ -1,7 +1,7 @@
-import { Component, inject, } from '@angular/core';
+import { Component, inject, ViewChild, } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { Patient } from '../../model/patient';
 import { PatientService } from '../../services/patient.service';
 import { map, Observable } from 'rxjs';
@@ -15,6 +15,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { Medic } from '../../model/medic';
 import { MedicService } from '../../services/medic.service';
+import { FlexLayoutModule } from 'ngx-flexible-layout';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBar} from '@angular/material/snack-bar';
+import { Consult } from '../../model/consult';
+import { format } from 'date-fns';
+import { consultListExamDTOI } from '../../model/consutListExamDTOI';
+import { ConsultService } from '../../services/consult.service';
 
 @Component({
   selector: 'app-consult-wizard',
@@ -26,7 +33,9 @@ import { MedicService } from '../../services/medic.service';
     MatCardModule,
     ReactiveFormsModule,
     AsyncPipe,
-    MatListModule
+    MatListModule,
+    FlexLayoutModule,
+    MatGridListModule
   ],
   templateUrl: './consult-wizard.component.html',
   styleUrl: './consult-wizard.component.css'
@@ -41,10 +50,17 @@ export class ConsultWizardComponent {
   examControl: FormControl = new FormControl();
   examsSelected: Exam[] = [];
   medics: Medic[] = [];
+  medicSelected: Medic;
+  consultArray: number[] = [];
+  consultSelected: number;
+
+  @ViewChild('stepper') stepper: MatStepper;
 
   private patientService = inject(PatientService);
   private examService = inject(ExamService);
   private medicService = inject(MedicService);
+  private _snackBar = inject(MatSnackBar);
+  private consultService = inject(ConsultService)
 
   ngOnInit() {
     this.firstFormGroup = new FormGroup({
@@ -54,6 +70,11 @@ export class ConsultWizardComponent {
       diagnosis: new FormControl(),
       treatment: new FormControl()
     })
+
+    this.examFiltered$ = this.examControl.valueChanges.pipe(
+      map((val) => this.filterExams(val))
+    );
+
     this.loadInicialData();
   }
 
@@ -62,7 +83,10 @@ export class ConsultWizardComponent {
     this.examService.findAll().subscribe((data) => (this.exams = data));
     this.medicService.findAll().subscribe(data => this.medics = data);
 
-    this.examFiltered$ = this.examControl.valueChanges.pipe(map((val) => this.filterExams(val)));
+    for(let i = 1; i <= 100; i++){
+      this.consultArray.push(i);
+    }
+    
   }
 
   filterExams(val: any) {
@@ -100,6 +124,56 @@ export class ConsultWizardComponent {
   addExam() {
     const tmpExam: Exam = this.firstFormGroup.value['exam'];
     this.examsSelected.push(tmpExam);
+  }
+
+  selectMedic(m: Medic) {
+    this.medicSelected = m;
+  }
+
+  selectConsult(n: number){
+    this.consultSelected = n;
+  }
+
+  nextManualStep(){
+    if(this.consultSelected > 0){
+      this.stepper.next();
+    }else {
+      this._snackBar.open('Please Select a consult number', 'WARN', {duration: 2000})
+    }
+  }
+
+  get f(){
+    return this.firstFormGroup.controls;
+  }
+
+  save(){
+    const consult = new Consult;
+    consult.patient = this.firstFormGroup.value['patient'];
+    consult.medic = this.medicSelected;
+    consult.details = this.details;
+    consult.numConsult = `C${this.consultSelected}`;
+    consult.idUser = 1;
+    consult.consultDate = format(this.firstFormGroup.value['consultDate'], "yyyy-MM-dd'T'HH:mm:ss");
+
+    const dto: consultListExamDTOI = {
+      consult : consult,
+      lstExam : this.examsSelected
+    };
+
+    this.consultService.saveTransactional(dto).subscribe( () => {
+      this._snackBar.open('CREATED!', 'INFO', {duration: 2000})
+
+      setTimeout( () => this.cleanControls(), 2000);
+    } )
+  }
+
+  cleanControls(){
+    this.firstFormGroup.reset();
+    this.stepper.reset();
+    this.details = [];
+    this.examsSelected = [];
+    this.medicSelected = null;
+    this.consultSelected = 0;
   }
 
 }

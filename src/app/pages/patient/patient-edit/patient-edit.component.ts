@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PatientService } from '../../../services/patient.service';
 import { Patient } from '../../../model/patient';
-import { pipe, switchMap, tap } from 'rxjs';
+import {  switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-patient-edit',

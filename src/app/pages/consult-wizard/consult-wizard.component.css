@@ -12,6 +12,14 @@
     position: fixed !important; /* el elemento se fija en la pantalla*/
 }
 
+.fixedLeft { /* posiciona un elemento de forma fija en la esquina inferior izquierda de la pantalla */
+    top: auto !important; 
+    right: auto !important; 
+    bottom: 10px !important; /*Se separa 10px  del borde inferior */
+    left: 20px !important; /*se separa 20px del borde izquierdo de la pantalla*/
+    position: fixed !important; /* el elemento se fija en la pantalla*/
+}
+
 .consultCSS{ /* texto blanco sobre fondo verde oscuro */
     background: rgb(2, 95, 68);
     color: white;

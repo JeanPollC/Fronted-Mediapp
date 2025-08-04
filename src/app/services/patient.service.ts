@@ -21,6 +21,9 @@ export class PatientService extends GenericService<Patient>{
     )
   }
 
+  listPageable(p: number, s: number){
+    return this.http.get<any>(`${environment.HOST}/patients/pageable?page=${p}&size=${s}`);
+  }
 
   //constructor(private http: HttpClient) { }
 
