@@ -8,8 +8,10 @@ import { ConsultWizardComponent } from "./consult-wizard/consult-wizard.componen
 import { SpecialtyComponent } from "./specialty/specialty.component";
 import { SearchComponent } from "./search/search.component";
 import { ReportComponent } from "./report/report.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
 
 export const pagesRoutes: Routes = [
+    { path: 'dashboard', component: DashboardComponent},
     {
         path: 'patient', component: PatientComponent, 
         children: [
