@@ -11,15 +11,16 @@ import { ReportComponent } from "./report/report.component";
 
 export const pagesRoutes: Routes = [
     {
-            path: 'patient', component: PatientComponent, children: [
-                { path: 'new', component: PatientEditComponent },
-                { path: 'edit/:id', component: PatientEditComponent },
-            ],
-        },
-        { path: 'medic', component: MedicComponent },
-        { path: 'exam', component: ExamComponent },
-        { path: 'consult-wizard', component: ConsultWizardComponent},
-        { path: 'specialty', component: SpecialtyComponent},
-        { path: 'search', component: SearchComponent},
-        { path: 'report', component: ReportComponent}
+        path: 'patient', component: PatientComponent, 
+        children: [
+            { path: 'new', component: PatientEditComponent },
+            { path: 'edit/:id', component: PatientEditComponent },
+        ],
+    },
+    { path: 'medic', component: MedicComponent },
+    { path: 'exam', component: ExamComponent },
+    { path: 'consult-wizard', component: ConsultWizardComponent},
+    { path: 'specialty', component: SpecialtyComponent},
+    { path: 'search', component: SearchComponent},
+    { path: 'report', component: ReportComponent}
 ]

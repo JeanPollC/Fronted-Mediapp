@@ -1,0 +1,77 @@
+.login-form {
+    display: flex;
+    justify-content: center; /*Centra horizontalmente el contenido dentro del contenedor*/
+    align-items: center;    /*Centra verticalmente el contenido dentro del contenedor*/
+    height: 100vh;      /*El contenedor ocupa el 100% de la altura de la ventana */
+    position: relative;
+  }
+
+  /* Se ajusta el fondo de la pantalla semitransparente y cubre toda el area visible */
+    .background {
+    background-image: url('/images.jpg');
+    background-size: cover; /*escala la immagen para cubrir todo el contenedor*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5; /* Lo hace semitransparente */
+    z-index: -1; /* Coloca el fondo detrás del formulario */
+  }
+
+  .login-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;      /* Espacio interno entre el borde y el contenido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave: desplazamiento X=0, Y=4px, difuminado=8px */
+  }
+
+  .mat-card-title {
+    font-size: 24px;
+    font-weight: bold;  /* Lo pone en negrita */
+    margin-bottom: 20px;    /* Espacio debajo del título para separar del contenido */
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  mat-card-actions {
+    display: flex;      /* Convierte el contenedor en un flexbox */
+    justify-content: flex-end;    /* Empuja el contenido (botones) hacia el lado derecho */  
+  }
+
+  button {
+    margin-left: 10px;
+  }
+
+  .app-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333; /* Color del texto */
+    text-align: center; /* Centra el texto */
+    margin-bottom: 20px; /* Espacio inferior */
+  }
+
+  .additional-links {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+   .additional-links a {
+    color: #777; /* Color gris claro para los enlaces */
+    text-decoration: none; /* Quita el subrayado por defecto */
+  }
+
+  .additional-links a:hover {
+    color: #333;
+  }
+
+  .separator {
+    margin: 0 10px;
+  }
