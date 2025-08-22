@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 import { Menu } from '../../model/menu';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-layout',
@@ -32,9 +33,14 @@ export class LayoutComponent {
   menus: Menu[];
 
   private menuService = inject(MenuService);
+  private loginService = inject(LoginService);
 
   ngOnInit(): void {
     this.menuService.getMenuChanges().subscribe(data => this.menus = data);
   }
+
+  logout(){
+      this.loginService.logout()
+    }
 
 }

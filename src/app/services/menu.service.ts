@@ -27,7 +27,7 @@ export class MenuService extends GenericService<Menu> {
     return this.menuChange.asObservable();
    }
 
-   serMenuChangue(menus: Menu[]){
+   setMenuChangue(menus: Menu[]){
     this.menuChange.next(menus);
    }
 }

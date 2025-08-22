@@ -9,20 +9,21 @@ import { SpecialtyComponent } from "./specialty/specialty.component";
 import { SearchComponent } from "./search/search.component";
 import { ReportComponent } from "./report/report.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { certGuard } from "../guard/cert.guard";
 
 export const pagesRoutes: Routes = [
-    { path: 'dashboard', component: DashboardComponent},
+    { path: 'dashboard', component: DashboardComponent, canActivate: [ certGuard ]},
     {
         path: 'patient', component: PatientComponent, 
         children: [
             { path: 'new', component: PatientEditComponent },
             { path: 'edit/:id', component: PatientEditComponent },
-        ],
+        ], canActivate: [ certGuard ]
     },
-    { path: 'medic', component: MedicComponent },
-    { path: 'exam', component: ExamComponent },
-    { path: 'consult-wizard', component: ConsultWizardComponent},
-    { path: 'specialty', component: SpecialtyComponent},
-    { path: 'search', component: SearchComponent},
-    { path: 'report', component: ReportComponent}
+    { path: 'medic', component: MedicComponent, canActivate: [ certGuard ] },
+    { path: 'exam', component: ExamComponent, canActivate: [ certGuard ] },
+    { path: 'consult-wizard', component: ConsultWizardComponent, canActivate: [ certGuard ]},
+    { path: 'specialty', component: SpecialtyComponent, canActivate: [ certGuard ]},
+    { path: 'search', component: SearchComponent, canActivate: [ certGuard ]},
+    { path: 'report', component: ReportComponent, canActivate: [ certGuard ]}
 ]

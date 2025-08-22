@@ -24,7 +24,7 @@ export class DashboardComponent {
     //console.log(decodedToken);
     this.username = decodedToken.sub;
 
-    this.menuService.getMenusByUser().subscribe(data => this.menuService.serMenuChangue(data));
+    this.menuService.getMenusByUser().subscribe(data => this.menuService.setMenuChangue(data));
 
   }
 

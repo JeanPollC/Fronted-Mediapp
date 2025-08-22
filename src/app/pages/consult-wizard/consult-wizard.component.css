@@ -1,92 +1,103 @@
-.medic-selected {
-    box-shadow:  0 0 20px rgba(0, 0, 0, 0.7); /* Aumentar el efecto de sombra */
-    border: 2px solid rgb(34, 0, 255); /* Cambia el borde del card */
-    transition: box-shadow 0.3s ease, border 0.3s ease; /* Agrega transiciones suaves */
-}
-
-.fixedRigth { /* posiciona un elemento de forma fija en la esquina inferior derecha de la pantalla */
-    top: auto !important; 
-    right: 20px !important; /*se separa 20px del borde derecho de la pantalla*/
-    bottom: 10px !important; /*Se separa 10px  del borde inferior */
-    left: auto !important;
-    position: fixed !important; /* el elemento se fija en la pantalla*/
-}
-
-.fixedLeft { /* posiciona un elemento de forma fija en la esquina inferior izquierda de la pantalla */
-    top: auto !important; 
-    right: auto !important; 
-    bottom: 10px !important; /*Se separa 10px  del borde inferior */
-    left: 20px !important; /*se separa 20px del borde izquierdo de la pantalla*/
-    position: fixed !important; /* el elemento se fija en la pantalla*/
-}
-
-.consultCSS{ /* texto blanco sobre fondo verde oscuro */
-    background: rgb(2, 95, 68);
-    color: white;
-}
-
-/* Organizar el formulario de forma vertical y centrada */
+/* ====== GENERAL ====== */
 .form-container {
-    display: flex; /* Convierte el contenedor en un contenedor flexible usando Flexbox */
-    flex-direction: column; /* Hace que los elementos hijos se coloquen uno debajo del otro (en columna) */
-    align-items: center; /* Centra Horizontalmente los hijos dentro del contenedor */
-    width: 100%; /*El contenedor usara todo el ancho disponible del padre */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
 }
 
-
-/* Hace que cualquier elemento del formulario ocupe todo el espacio del padre */
-.form-container form {
-    width: 100%;
+mat-form-field {
+  width: 100%;
 }
 
-.form-container mat-form-field {
-    width: 100%; /* Permite usar todo el ancho del formulario */
-    margin-bottom: 20px; /* Agrega un espacio vertical debajo de cada campo */
+/* Botones principales */
+button[mat-button] {
+  margin-top: 10px;
 }
 
-/* Estilos para los botones dentro del contenedor */
-.form-container button {
-    margin-top: 20px; /*¨Agrega un espacio de 20px por encima del boton */
+.fixedRigth {
+  position: fixed;
+  right: 40px;
+  bottom: 20px;
+  background-color: #1976d2;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
 }
 
-/* Estilos para las listas dentro del contenedor */
-.form-container mat-list {
-    width: 100%;
-    margin-top: 20px;
+.fixedLeft {
+  position: fixed;
+  left: 40px;
+  bottom: 20px;
+  background-color: #9e9e9e;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
 }
 
-/* Estilos para las tarjetas de médicos dentro del contenedor */
-.form-container .mat-card {
-    width: 300px; /* Define el ancho de la tarjeta */
-    margin: 10px; /* Agrega un espacio externo, separandolas unas de las otras */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aplica una sombra suave */
-    transition: box-shadow 0.3s ease; /* Permite que el cambio en la sombre se anime suavemente */
+/* ====== DETAILS ====== */
+mat-expansion-panel {
+  margin-top: 10px;
+  border-radius: 10px;
 }
 
-/*Aplica un efecto visual al pasar el mouse*/
- .form-container .mat-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);/*Crea una sombra al rededor del card*/
- }
+mat-expansion-panel-header {
+  background: #f5f5f5;
+}
 
-/*estilos para el titulo del medico seleccionado dentro del contenedor */
- .form-container .medic-title {
-    color: #1976d2
- }
+/* ====== LISTA DE EXÁMENES ====== */
+mat-list {
+  margin-top: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fafafa;
+}
 
- /*Permite que el cursor pase a una mano cuando pase sobre una imagen 
-    dentro del mat-card*/
- .form-container mat-card img {
-    cursor: pointer;
- }
+/* ====== MEDICOS ====== */
+mat-card {
+  width: 260px;
+  margin: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+  cursor: pointer;
+}
 
- /*Hace que todos los botones que estan dentro del mat card se expandan
-    para ocupar el 100% del ancho disponible*/
- .form-container .mat-card-actions button {
-    width: 100%;
- }
+mat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
 
-/*Aplica una margen superior a todos los botones que tienen un
-    atributo matStepperNext*/
- .form-container button[matStepperNext] {
-    margin-top: 30px;
- }
+.medic-selected {
+  border: 3px solid #1976d2;
+}
+
+mat-card img[mat-card-image] {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ====== GRID DE CONSULTAS ====== */
+mat-grid-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+mat-grid-tile:hover {
+  background-color: #e3f2fd;
+  transform: scale(1.05);
+}
+
+.consultCSS {
+  background-color: #1976d2 !important;
+  color: white !important;
+  border-radius: 8px;
+}
